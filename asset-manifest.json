@@ -1,0 +1,23 @@
+{
+  "files": {
+    "main.css": "/meteo-app/static/css/main.5f361e03.chunk.css",
+    "main.js": "/meteo-app/static/js/main.e4219cec.chunk.js",
+    "main.js.map": "/meteo-app/static/js/main.e4219cec.chunk.js.map",
+    "runtime-main.js": "/meteo-app/static/js/runtime-main.1d9be2da.js",
+    "runtime-main.js.map": "/meteo-app/static/js/runtime-main.1d9be2da.js.map",
+    "static/js/2.368acb9e.chunk.js": "/meteo-app/static/js/2.368acb9e.chunk.js",
+    "static/js/2.368acb9e.chunk.js.map": "/meteo-app/static/js/2.368acb9e.chunk.js.map",
+    "index.html": "/meteo-app/index.html",
+    "precache-manifest.5e3be1db878744a013b0ec1c222de68f.js": "/meteo-app/precache-manifest.5e3be1db878744a013b0ec1c222de68f.js",
+    "service-worker.js": "/meteo-app/service-worker.js",
+    "static/css/main.5f361e03.chunk.css.map": "/meteo-app/static/css/main.5f361e03.chunk.css.map",
+    "static/js/2.368acb9e.chunk.js.LICENSE.txt": "/meteo-app/static/js/2.368acb9e.chunk.js.LICENSE.txt",
+    "static/media/logo.svg": "/meteo-app/static/media/logo.5d5d9eef.svg"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.1d9be2da.js",
+    "static/js/2.368acb9e.chunk.js",
+    "static/css/main.5f361e03.chunk.css",
+    "static/js/main.e4219cec.chunk.js"
+  ]
+}
