@@ -1,11 +1,19 @@
 import React from 'react';
+import "./SearchBar.css";
 
-    function SearchBar() {
+
+export default class SearchBar extends React.Component {
+
+    handleChange = () => {
+        console.log('Hello');
+    }
+
+    render() {
         return (
-            <div>
-                <h1>Coucou</h1>
+            <div className="component-search-input">
+                <input onChange={this.handleChange} />
             </div>
         );
     }
-
-export default SearchBar;
+    
+}
