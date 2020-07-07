@@ -1,9 +1,9 @@
 import React from 'react';
 
-    function TodayWeather() {
+    function TodayWeather(props) {
         return (
             <div>
-                <h1>Test</h1>
+                <h1>{props.weatherData}</h1>
             </div>
         );
     }
