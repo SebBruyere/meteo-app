@@ -29,11 +29,18 @@ export default class Sidebar extends React.Component {
     }
 
     render() {
-        const weatherData = this.props.weatherData;
+
+        let weatherData = this.props.weatherData;
+
+        // If not empty
+        if(weatherData.length > 0) {
+            weatherData = JSON.parse(weatherData);
+        }
+
         return (
             <div className="component-sidebar">
                 <SearchBar keydown={this.handleKeyDown} />
-                <TodayWeather weatherData={this.props.weatherData}/>
+                <TodayWeather weatherData={weatherData}/>
             </div>
         );
     }
