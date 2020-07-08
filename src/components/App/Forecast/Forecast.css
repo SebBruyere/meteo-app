@@ -1,8 +1,6 @@
 .component-forecast {
-    width: 70%;
     height: 30vh;
     padding: 50px 20px;
     background-color: #5b606b;
-    margin: 15px;
     border-radius: 6px;
 }

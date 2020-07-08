@@ -1,7 +1,6 @@
 .component-sidebar {
-    width: 30%;
+    height: 100%;
     padding: 50px 20px;
     background-color: #5b606b;
-    margin: 15px;
     border-radius: 6px;
 }

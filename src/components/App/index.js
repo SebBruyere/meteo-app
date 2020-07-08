@@ -4,6 +4,7 @@ import Sidebar from './Sidebar';
 import Forecast from './Forecast';
 import APIService from './APIService';
 import axios from 'axios';
+import 'bootstrap/dist/css/bootstrap.css';
 
 const service = new APIService();
 
@@ -29,12 +30,23 @@ function App () {
             <header className="App-header">
             </header>
             <body className="App-body">
-                <Sidebar
-                    city={appState.city}
-                    weatherData={appState.weatherData}
-                    handleEnter={fetchApiData}
-                />
-                <Forecast city={appState.city} weatherData={appState.weatherData} />
+                <div className="container-fluid">
+                    <div className="row h-100">
+                        <div className="col-xs-12 col-md-6 col-lg-4 col-xl-3 mt-3 mb-3 text-center">
+                            <Sidebar
+                                city={appState.city}
+                                weatherData={appState.weatherData}
+                                handleEnter={fetchApiData}
+                            />
+                        </div>
+                        <div className="col-xs-12 col-md-6 col-lg-8 col-xl-9 mt-3 mb-3">
+                            <Forecast
+                                city={appState.city}
+                                weatherData={appState.weatherData}
+                            />
+                        </div>
+                    </div>
+                </div>
             </body>
         </div>
     );
