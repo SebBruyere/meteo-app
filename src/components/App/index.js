@@ -5,30 +5,6 @@ import Forecast from './Forecast';
 import APIService from './APIService';
 import axios from 'axios';
 
-// class App extends React.Component {
-//
-//     constructor (props) {
-//         super(props);
-//
-//         this.state = {
-//             weatherInfo: []
-//         };
-//     }
-//
-//     render() {
-//         return (
-//           <div className="App">
-//             <header className="App-header">
-//             </header>
-//             <body className="App-body">
-//                 <Sidebar data={this.state.weatherInfo} />
-//                 <Forecast data={this.state.weatherInfo} />
-//             </body>
-//           </div>
-//         );
-//     }
-// }
-
 const service = new APIService();
 
 function App () {
@@ -53,15 +29,11 @@ function App () {
     const fetchApiData = (event) => {
         axios.get(`${service.getApiUrl()}?appid=${service.getApiKey()}&q=${event}&units=metric`)
          .then(res => {
-             setAppState({weatherData: JSON.stringify(res.data)})
-         })
+            return JSON.stringify(res.data);
+         }).then(result => {
+             setAppState({weatherData: result})
+         });
     }
-
-    // async function fetchApiData(e) {
-    //     let response = await service.fetchApiData(e);
-    //     let data = await response.json()
-    //     console.log(data);
-    // }
 
     return (
         <div className="App">

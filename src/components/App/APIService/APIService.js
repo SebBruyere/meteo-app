@@ -16,6 +16,10 @@ export default class APIService {
         return this.apiUrl;
     }
 
+    cleanData(json) {
+        console.log(JSON.parse(json));
+    }
+
     // fetchApiData(input) {
     //     // console.log(input);
     //     // console.log(`${this.apiUrl}?appid=${this.apiKey}&q=${input}&units=metric`);
