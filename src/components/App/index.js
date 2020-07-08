@@ -15,21 +15,10 @@ function App () {
         city: null,
     });
 
-    // useEffect(() => {
-    //     setAppState({ loading: true });
-    //     const apiUrl = `https://api.github.com/users/hacktivist123/repos`;
-    //     fetch(apiUrl)
-    //     .then((res) => res.json())
-    //     .then((repos) => {
-    //         setAppState({ loading: false, weatherData: repos });
-    //     });
-    // }, [setAppState]);
-
-
     const fetchApiData = (event) => {
-        axios.get(`${service.getApiUrl()}?appid=${service.getApiKey()}&q=${event}&units=metric`)
+        axios.get(`${service.getApiUrl()}?appid=${service.getApiKey()}&q=${event}&units=metric&lang=fr`)
          .then(res => {
-            return JSON.stringify(res.data);
+             return service.sanitizeData(res.data);
          }).then(result => {
              setAppState({weatherData: result})
          });

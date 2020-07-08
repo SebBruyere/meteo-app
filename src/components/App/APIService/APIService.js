@@ -16,8 +16,17 @@ export default class APIService {
         return this.apiUrl;
     }
 
-    cleanData(json) {
-        console.log(JSON.parse(json));
+    sanitizeData(json) {
+        console.log(json);
+        var jsonData = {
+            name: json.name,
+            currentTemp: json.main.temp,
+            weatherDesc: json.weather[0].description,
+            weatherIcon: "http://openweathermap.org/img/wn/" + json.weather[0].icon + "@2x.png",
+            country: json.sys.country
+        };
+
+        return JSON.stringify(jsonData);
     }
 
     // fetchApiData(input) {
