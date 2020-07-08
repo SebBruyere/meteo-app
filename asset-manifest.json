@@ -1,23 +1,23 @@
 {
   "files": {
-    "main.css": "/meteo-appp/static/css/main.2ff8d76a.chunk.css",
-    "main.js": "/meteo-appp/static/js/main.12594e69.chunk.js",
-    "main.js.map": "/meteo-appp/static/js/main.12594e69.chunk.js.map",
-    "runtime-main.js": "/meteo-appp/static/js/runtime-main.01852aa9.js",
-    "runtime-main.js.map": "/meteo-appp/static/js/runtime-main.01852aa9.js.map",
-    "static/js/2.bc66a0c8.chunk.js": "/meteo-appp/static/js/2.bc66a0c8.chunk.js",
-    "static/js/2.bc66a0c8.chunk.js.map": "/meteo-appp/static/js/2.bc66a0c8.chunk.js.map",
-    "index.html": "/meteo-appp/index.html",
-    "precache-manifest.c1d91ec173dac47dbfc8d8a44b595218.js": "/meteo-appp/precache-manifest.c1d91ec173dac47dbfc8d8a44b595218.js",
-    "service-worker.js": "/meteo-appp/service-worker.js",
-    "static/css/main.2ff8d76a.chunk.css.map": "/meteo-appp/static/css/main.2ff8d76a.chunk.css.map",
-    "static/js/2.bc66a0c8.chunk.js.LICENSE.txt": "/meteo-appp/static/js/2.bc66a0c8.chunk.js.LICENSE.txt",
-    "static/media/logo.svg": "/meteo-appp/static/media/logo.ee7cd8ed.svg"
+    "main.css": "/meteo-app/static/css/main.2ff8d76a.chunk.css",
+    "main.js": "/meteo-app/static/js/main.f9d6cfc0.chunk.js",
+    "main.js.map": "/meteo-app/static/js/main.f9d6cfc0.chunk.js.map",
+    "runtime-main.js": "/meteo-app/static/js/runtime-main.1d9be2da.js",
+    "runtime-main.js.map": "/meteo-app/static/js/runtime-main.1d9be2da.js.map",
+    "static/js/2.bc66a0c8.chunk.js": "/meteo-app/static/js/2.bc66a0c8.chunk.js",
+    "static/js/2.bc66a0c8.chunk.js.map": "/meteo-app/static/js/2.bc66a0c8.chunk.js.map",
+    "index.html": "/meteo-app/index.html",
+    "precache-manifest.77e432d584d5e95c7828f4f4693c9e1a.js": "/meteo-app/precache-manifest.77e432d584d5e95c7828f4f4693c9e1a.js",
+    "service-worker.js": "/meteo-app/service-worker.js",
+    "static/css/main.2ff8d76a.chunk.css.map": "/meteo-app/static/css/main.2ff8d76a.chunk.css.map",
+    "static/js/2.bc66a0c8.chunk.js.LICENSE.txt": "/meteo-app/static/js/2.bc66a0c8.chunk.js.LICENSE.txt",
+    "static/media/logo.svg": "/meteo-app/static/media/logo.ee7cd8ed.svg"
   },
   "entrypoints": [
-    "static/js/runtime-main.01852aa9.js",
+    "static/js/runtime-main.1d9be2da.js",
     "static/js/2.bc66a0c8.chunk.js",
     "static/css/main.2ff8d76a.chunk.css",
-    "static/js/main.12594e69.chunk.js"
+    "static/js/main.f9d6cfc0.chunk.js"
   ]
 }
