@@ -4,7 +4,7 @@ import "./SearchBar.css";
 function SearchBar (props) {
     return (
         <div className="component-search-input">
-            <input onKeyDown={props.keydown} value={props.city}/>
+            <input onKeyDown={props.keydown} />
         </div>
     );
 }

@@ -1,8 +1,6 @@
 import React from 'react';
 import SearchBar from './SearchBar';
 import TodayWeather from './TodayWeather';
-import {apiKey, apiUrl} from '../../../api/config';
-import axios from 'axios';
 
 import "./Sidebar.css";
 
