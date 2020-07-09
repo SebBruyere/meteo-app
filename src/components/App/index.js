@@ -48,14 +48,14 @@ function App () {
                         <div className="col-xs-12 col-md-6 col-lg-4 col-xl-3 mt-3 mb-3 text-center">
                             <Sidebar
                                 city={appState.city}
-                                weatherData={appState.weatherData}
+                                weatherData={appState.weatherData ? appState.weatherData : false}
                                 handleEnter={fetchApiData}
                             />
                         </div>
                         <div className="col-xs-12 col-md-6 col-lg-8 col-xl-9 mt-3 mb-3">
                             <Forecast
                                 city={appState.city}
-                                forecastData={appState.forecastData}
+                                forecastData={appState.forecastData ? appState.forecastData : false}
                             />
                         </div>
                     </div>
