@@ -1,32 +1,57 @@
-import React, { useState, useEffect } from 'react';
-import axios from 'axios';
-
 export default class APIService {
 
     constructor() {
         this.apiKey = "109ff3545de4ef5f87dacbb3775a0e1f";
-        this.apiUrl = "https://api.openweathermap.org/data/2.5/weather";
+        this.apiUrlWeather = "https://api.openweathermap.org/data/2.5/weather";
+        this.apiUrlForecast = "https://api.openweathermap.org/data/2.5/forecast";
+        this.defaultCity = "Nice";
     }
 
     getApiKey() {
         return this.apiKey;
     }
 
-    getApiUrl() {
-        return this.apiUrl;
+    getApiUrlWeather() {
+        return this.apiUrlWeather;
+    }
+    getApiUrlForecast() {
+        return this.apiUrlForecast;
+    }
+    getDefaultCity() {
+        return this.defaultCity;
     }
 
-    sanitizeData(json) {
-        console.log(json);
+    sanitizeDataWeather(json) {
         var jsonData = {
-            name: json.name,
-            currentTemp: json.main.temp,
-            weatherDesc: json.weather[0].description,
-            weatherIcon: "http://openweathermap.org/img/wn/" + json.weather[0].icon + "@2x.png",
-            country: json.sys.country
+            name: json.data.name,
+            currentTemp: json.data.main.temp,
+            weatherDesc: json.data.weather[0].description,
+            weatherIcon: "http://openweathermap.org/img/wn/" + json.data.weather[0].icon + "@2x.png",
+            country: json.data.sys.country
         };
 
         return JSON.stringify(jsonData);
+    }
+
+    sanitizeDataForecast(json) {
+        const week = json.data.list;
+        var weekData = [];
+
+        for(var i = 0; i < 8; i++) {
+            weekData.push(this.sanitizeOneDayForecast(week[i]));
+        }
+
+        return JSON.stringify(weekData);
+    }
+
+    sanitizeOneDayForecast (json) {
+        var jsonData = {
+            currentTemp: json.main.temp,
+            weatherDesc: json.weather[0].description,
+            weatherIcon: "http://openweathermap.org/img/wn/" + json.weather[0].icon + "@2x.png",
+        };
+
+        return jsonData;
     }
 
     // fetchApiData(input) {

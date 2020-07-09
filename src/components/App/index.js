@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import './App.css';
 import Sidebar from './Sidebar';
 import Forecast from './Forecast';
@@ -13,17 +13,30 @@ function App () {
     const [appState, setAppState] = useState({
         loading: false,
         weatherData: [],
+        forecastData: [],
         city: null,
     });
 
     const fetchApiData = (event) => {
-        axios.get(`${service.getApiUrl()}?appid=${service.getApiKey()}&q=${event}&units=metric&lang=fr`)
-         .then(res => {
-             return service.sanitizeData(res.data);
-         }).then(result => {
-             setAppState({weatherData: result})
-         });
+        const weatherRequest = axios.get(`${service.getApiUrlWeather()}?appid=${service.getApiKey()}&q=${event}&units=metric&lang=fr`);
+        const forecastRequest = axios.get(`${service.getApiUrlForecast()}?appid=${service.getApiKey()}&q=${event}&units=metric&lang=fr`);
+
+        axios.all([weatherRequest, forecastRequest])
+            .then(axios.spread((...responses) => {
+                const responseOne = responses[0];
+                const responseTwo = responses[1];
+
+                setAppState({
+                    weatherData: service.sanitizeDataWeather(responseOne),
+                    forecastData: service.sanitizeDataForecast(responseTwo)
+                });
+            // use/access the results
+            })).catch(errors => {
+
+        })
     }
+
+    //fetchApiData(service.getDefaultCity());
 
     return (
         <div className="App">
@@ -35,14 +48,14 @@ function App () {
                         <div className="col-xs-12 col-md-6 col-lg-4 col-xl-3 mt-3 mb-3 text-center">
                             <Sidebar
                                 city={appState.city}
-                                weatherData={appState.weatherData}
+                                weatherData={appState.weatherData ? appState.weatherData : false}
                                 handleEnter={fetchApiData}
                             />
                         </div>
                         <div className="col-xs-12 col-md-6 col-lg-8 col-xl-9 mt-3 mb-3">
                             <Forecast
                                 city={appState.city}
-                                weatherData={appState.weatherData}
+                                forecastData={appState.forecastData ? appState.forecastData : false}
                             />
                         </div>
                     </div>

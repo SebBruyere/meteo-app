@@ -1,12 +1,33 @@
 import React from 'react';
 import './Forecast.css';
+import Thumbnail from './Thumbnail';
+import { CSSTransitionGroup } from 'react-transition-group'
 
-function Forecast() {
-  return (
-    <div className="component-forecast">
-        <h1>Week forecast</h1>
-    </div>
-  );
+export default class Forecast extends React.Component {
+    render() {
+
+        let forecastData = this.props.forecastData;
+        let items = [];
+
+        if(forecastData.length) {
+            forecastData = JSON.parse(this.props.forecastData);
+            items = forecastData.map((oneDay, i) => (
+                <div className="wrapper-thumbnail mt-5 mb-5 ml-2 mr-2 col-xs-6 col-md-6 col-lg-3 col-xl-2 text-center">
+                    <Thumbnail key={i.toString()} forecastData={oneDay} />
+                </div>
+            ));
+        }
+
+        return(
+            <div className="component-forecast">
+                <h1>Week forecast</h1>
+                <div className="container">
+                    <div className="row">
+                        {items}
+                    </div>
+                </div>
+            </div>
+        )
+    }
+
 }
-
-export default Forecast;
