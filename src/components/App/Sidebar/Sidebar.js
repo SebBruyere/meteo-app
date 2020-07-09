@@ -16,7 +16,7 @@ export default class Sidebar extends React.Component {
 
         // Set some state
         this.state = {
-            value: this.props.city,
+            city: this.props.city,
             weatherInfo: null,
             error: false,
         };
@@ -39,7 +39,7 @@ export default class Sidebar extends React.Component {
 
         return (
             <div className="component-sidebar">
-                <SearchBar keydown={this.handleKeyDown} />
+                <SearchBar city={this.state.city} keydown={this.handleKeyDown} />
                 <TodayWeather weatherData={weatherData}/>
             </div>
         );
