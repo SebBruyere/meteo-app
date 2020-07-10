@@ -7,6 +7,8 @@ function Thumbnail(props) {
             <h4>{props.forecastData.currentTemp ? props.forecastData.currentTemp + "°" : ""}</h4>
             <p>{props.forecastData.weatherDesc}</p>
             <img className="" src={props.forecastData.weatherIcon ? props.forecastData.weatherIcon : ""} alt="Weather Icon"/>
+            <h4>{props.forecastData.dayToDisplay}</h4>
+            <h5>{props.forecastData.hourToDisplay}</h5>
         </div>
     );
 }

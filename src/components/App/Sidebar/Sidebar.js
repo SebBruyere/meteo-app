@@ -37,6 +37,7 @@ export default class Sidebar extends React.Component {
 
         return (
             <div className="component-sidebar">
+                <h1 className="mb-5">Today's weather</h1>
                 <SearchBar city={this.state.city} keydown={this.handleKeyDown} />
                 <TodayWeather weatherData={weatherData}/>
             </div>
