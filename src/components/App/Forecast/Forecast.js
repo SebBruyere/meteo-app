@@ -20,7 +20,7 @@ export default class Forecast extends React.Component {
 
         return(
             <div className="component-forecast">
-                <h1>Week forecast</h1>
+                <h1 className="text-center">Forecast</h1>
                 <div className="container">
                     <div className="row">
                         {items}
