@@ -38,12 +38,17 @@ export default class APIService {
         return string;
     }
 
+    capitalize = (s) => {
+        if (typeof s !== 'string') return ''
+        return s.charAt(0).toUpperCase() + s.slice(1)
+    }
+
 
     sanitizeDataWeather(json) {
         var jsonData = {
             name: json.data.name,
             currentTemp: json.data.main.temp,
-            weatherDesc: json.data.weather[0].description,
+            weatherDesc: this.capitalize(json.data.weather[0].description),
             weatherIcon: "http://openweathermap.org/img/wn/" + json.data.weather[0].icon + "@2x.png",
             country: json.data.sys.country
         };
@@ -72,11 +77,6 @@ export default class APIService {
             first.getMonth() === second.getMonth() &&
             first.getDate() === second.getDate();
 
-        const capitalize = (s) => {
-            if (typeof s !== 'string') return ''
-            return s.charAt(0).toUpperCase() + s.slice(1)
-        }
-
         if(datesAreOnSameDay(dateWeather, dateNow)) {
             var dateToDisplay = "Today";
         } else if(dateTomorrow.getFullYear() == dateWeather.getFullYear() && dateTomorrow.getMonth() == dateWeather.getMonth() && dateTomorrow.getDate() == dateWeather.getDate()) {
@@ -87,7 +87,7 @@ export default class APIService {
 
         var jsonData = {
             currentTemp: json.main.temp,
-            weatherDesc: capitalize(json.weather[0].description),
+            weatherDesc: this.capitalize(json.weather[0].description),
             weatherIcon: "http://openweathermap.org/img/wn/" + json.weather[0].icon + "@2x.png",
             dayToDisplay: dateToDisplay,
             hourToDisplay: this.hourToDisplay(dateWeather),
