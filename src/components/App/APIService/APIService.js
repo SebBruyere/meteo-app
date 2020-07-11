@@ -3,7 +3,10 @@ export default class APIService {
     constructor() {
         this.apiKey = "109ff3545de4ef5f87dacbb3775a0e1f";
         this.apiUrlWeather = "https://api.openweathermap.org/data/2.5/weather";
-        this.apiUrlForecast = "https://api.openweathermap.org/data/2.5/forecast";
+        this.apiUrlHourlyForecast = "https://api.openweathermap.org/data/2.5/forecast";
+
+        this.apiUrlOneCall = "https://api.openweathermap.org/data/2.5/onecall";
+
         this.defaultCity = "Nice";
         this.weekday = {
             0: "Sunday",
@@ -23,8 +26,11 @@ export default class APIService {
     getApiUrlWeather() {
         return this.apiUrlWeather;
     }
-    getApiUrlForecast() {
-        return this.apiUrlForecast;
+    getApiUrlHourlyForecast() {
+        return this.apiUrlHourlyForecast;
+    }
+    getApiUrlOneCall() {
+        return this.apiUrlOneCall;
     }
     getDefaultCity() {
         return this.defaultCity;
@@ -45,6 +51,7 @@ export default class APIService {
 
 
     sanitizeDataWeather(json) {
+
         var jsonData = {
             name: json.data.name,
             currentTemp: Math.floor(json.data.main.temp * 1) / 1,
@@ -53,53 +60,47 @@ export default class APIService {
             country: json.data.sys.country
         };
 
-        return JSON.stringify(jsonData);
+        return jsonData;
     }
 
-    sanitizeDataForecast(json) {
-        const forecast = json.data.list;
 
-        const fullForecastData = {
-            todayForecast: [],
-            remainingForecast: []
-        };
-
-        for(var i = 0; i < 8; i++) {
-            fullForecastData.todayForecast.push(this.sanitizeOneDayForecast(forecast[i]));
-        }
-        for( i = 8; i < 39; i++) {
-            fullForecastData.remainingForecast.push(this.sanitizeOneDayForecast(forecast[i]));
-        }
-
-        return fullForecastData;
-    }
-
-    sanitizeOneDayForecast (json) {
-        const dateWeather = new Date(json.dt * 1000);
+    sanitizeForecast (json) {
         const dateNow = new Date();
         var dateTomorrow = new Date(dateNow.getFullYear(), dateNow.getMonth(), dateNow.getDate() + 1);
 
+        // Check if date now and
         const datesAreOnSameDay = (first, second) =>
             first.getFullYear() === second.getFullYear() &&
             first.getMonth() === second.getMonth() &&
             first.getDate() === second.getDate();
 
-        if(datesAreOnSameDay(dateWeather, dateNow)) {
-            var dateToDisplay = "Aujourd'hui";
-        } else if(dateTomorrow.getFullYear() == dateWeather.getFullYear() && dateTomorrow.getMonth() == dateWeather.getMonth() && dateTomorrow.getDate() == dateWeather.getDate()) {
-            var dateToDisplay = "Demain";
-        } else {
-            var dateToDisplay = this.weekday[dateWeather.getDay()];
-        }
+        var array = [];
 
-        var jsonData = {
-            currentTemp: Math.floor(json.main.temp * 1) / 1,
-            weatherDesc: this.capitalize(json.weather[0].description),
-            weatherIcon: "http://openweathermap.org/img/wn/" + json.weather[0].icon + "@2x.png",
-            dayToDisplay: dateToDisplay,
-            hourToDisplay: this.hourToDisplay(dateWeather),
-        };
 
-        return jsonData;
+        json.forEach(el => {
+            const dateWeather = new Date(el.dt * 1000);
+            var temp = el.temp.day ? el.temp.day : el.temp;
+
+            array.push({
+                currentTemp: Math.floor(temp * 1) / 1,
+                weatherDesc: this.capitalize(el.weather[0].description),
+                weatherIcon: "http://openweathermap.org/img/wn/" + el.weather[0].icon + "@2x.png",
+                dayName: this.weekday[dateWeather.getDay()],
+                hour: this.hourToDisplay(this.convertUTCDateToLocalDate(dateWeather)),
+            })
+        });
+
+        return array.slice(0, 24);
+    }
+
+    convertUTCDateToLocalDate(date) {
+        var newDate = new Date(date.getTime()+date.getTimezoneOffset()*60*1000);
+
+        var offset = date.getTimezoneOffset() / 60;
+        var hours = date.getHours();
+
+        newDate.setHours(hours - offset);
+
+        return newDate;
     }
 }

@@ -30,23 +30,21 @@ export default class Sidebar extends React.Component {
     render() {
 
         let todaySummary = this.props.todaySummary;
-        let todayForecast = this.props.todayForecast;
+        let hourlyForecast = this.props.hourlyForecast;
+
+        console.log(todaySummary);
 
         // If not empty today summary
-        if(todaySummary.length > 0) {
-            todaySummary = JSON.parse(todaySummary);
-        }
-        // If not empty forecast
-        if(todayForecast.length > 0) {
-            todayForecast = JSON.parse(todayForecast);
-        }
+            // if(todaySummary.length > 0) {
+            //     todaySummary = JSON.parse(todaySummary);
+            // }
 
         return (
             <div className="component-sidebar">
                 <h1 className="mb-5">Today's weather</h1>
                 <SearchBar city={this.state.city} keydown={this.handleKeyDown} />
                 <TodayWeather todaySummary={todaySummary} />
-                <TodayForecast todayForecast={todayForecast} />
+                <TodayForecast todayForecast={hourlyForecast} />
             </div>
         );
     }

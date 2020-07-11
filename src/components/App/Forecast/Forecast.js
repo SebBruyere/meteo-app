@@ -12,9 +12,8 @@ export default class Forecast extends React.Component {
         let items = [];
 
         if(forecastData.length) {
-            forecastData = JSON.parse(this.props.forecastData);
             items = forecastData.map((oneDay, i) => (
-                <div className="wrapper-thumbnail mt-2 mb-2 ml-2 mr-2 col-xs-6 col-md-6 col-lg-3 col-xl-2 text-center">
+                <div className="wrapper-thumbnail mt-2 mb-2 ml-2 mr-2 col-xs-12 col-md-6 col-lg-3 col-xl-2 text-center">
                     <Thumbnail key={i.toString()} forecastData={oneDay} />
                 </div>
             ));

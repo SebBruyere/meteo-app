@@ -1,6 +1,6 @@
 .component-forecast {
     padding: 20px;
-    background-color: #5b606b;
+    background-color: #5b606b80 ;
     border-radius: 6px;
     cursor: grab;
 }
