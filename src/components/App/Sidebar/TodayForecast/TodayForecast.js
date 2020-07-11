@@ -2,6 +2,8 @@ import React from 'react';
 import "./TodayForecast.css";
 import SmallThumbnail from "./SmallThumbnail";
 
+import ScrollContainer from 'react-indiana-drag-scroll';
+
 export default class TodayForecast extends React.Component {
     render() {
 
@@ -21,9 +23,11 @@ export default class TodayForecast extends React.Component {
         return(
             <div className="component-forecast">
                 <div className="container">
-                    <div className="row flex-nowrap wrapper-smallthumbnail">
-                        {items}
-                    </div>
+                    <ScrollContainer className="scroll-container">
+                        <div className="row flex-nowrap wrapper-smallthumbnail">
+                            {items}
+                        </div>
+                    </ScrollContainer>
                 </div>
             </div>
         )
