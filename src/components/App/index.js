@@ -12,31 +12,34 @@ function App () {
 
     const [appState, setAppState] = useState({
         loading: false,
-        weatherData: [],
-        forecastData: [],
+        todaySummary: [],
+        todayForecast: [],
+        remainingForecast: [],
         city: null,
     });
 
     const fetchApiData = (event) => {
-        const weatherRequest = axios.get(`${service.getApiUrlWeather()}?appid=${service.getApiKey()}&q=${event}&units=metric&lang=fr`);
+        const todayWeatherRequest = axios.get(`${service.getApiUrlWeather()}?appid=${service.getApiKey()}&q=${event}&units=metric&lang=fr`);
         const forecastRequest = axios.get(`${service.getApiUrlForecast()}?appid=${service.getApiKey()}&q=${event}&units=metric&lang=fr`);
 
-        axios.all([weatherRequest, forecastRequest])
+        axios.all([todayWeatherRequest, forecastRequest])
             .then(axios.spread((...responses) => {
-                const responseOne = responses[0];
-                const responseTwo = responses[1];
+                const todayWeatherRes = responses[0];
+                const forecastRes = responses[1];
+
+                const forecastSanitizing = service.sanitizeDataForecast(forecastRes)
 
                 setAppState({
-                    weatherData: service.sanitizeDataWeather(responseOne),
-                    forecastData: service.sanitizeDataForecast(responseTwo)
+                    todaySummary: service.sanitizeDataWeather(todayWeatherRes),
+                    todayForecast: JSON.stringify(forecastSanitizing.todayForecast),
+                    remainingForecast: JSON.stringify(forecastSanitizing.remainingForecast)
                 });
+
             // use/access the results
             })).catch(errors => {
 
         })
     }
-
-    //fetchApiData(service.getDefaultCity());
 
     return (
         <div className="App">
@@ -48,14 +51,15 @@ function App () {
                         <div className="col-xs-12 col-md-6 col-lg-4 col-xl-3 mt-3 mb-3 text-center">
                             <Sidebar
                                 city={appState.city}
-                                weatherData={appState.weatherData ? appState.weatherData : false}
+                                todaySummary={appState.todaySummary ? appState.todaySummary : false}
+                                todayForecast={appState.todayForecast ? appState.todayForecast : false}
                                 handleEnter={fetchApiData}
                             />
                         </div>
                         <div className="col-xs-12 col-md-6 col-lg-8 col-xl-9 mt-3 mb-3">
                             <Forecast
                                 city={appState.city}
-                                forecastData={appState.forecastData ? appState.forecastData : false}
+                                forecastData={appState.remainingForecast ? appState.remainingForecast : false}
                             />
                         </div>
                     </div>

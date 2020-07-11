@@ -29,5 +29,4 @@ export default class Forecast extends React.Component {
             </div>
         )
     }
-
 }
