@@ -18,17 +18,18 @@ function App () {
         city: null,
     });
 
+    var todayWeather;
+
     const fetchApiData = (event) => {
         axios.get(`${service.getApiUrlWeather()}?appid=${service.getApiKey()}&q=${event}&units=metric&lang=fr`)
             .then(res => {
                 console.log(res);
-                setAppState({
-                    todaySummary: service.sanitizeDataWeather(res)
-                });
+                todayWeather = service.sanitizeDataWeather(res);
                 return axios.get(`${service.getApiUrlOneCall()}?appid=${service.getApiKey()}&lat=${res.data.coord.lat}&lon=${res.data.coord.lon}&exclude=current&units=metric&lang=fr`);
             }).then(res => {
                 console.log(res);
                 setAppState({
+                    todaySummary: todayWeather,
                     hourlyForecast: service.sanitizeForecast(res.data.hourly),
                     dailyForecast: service.sanitizeForecast(res.data.daily)
                 });

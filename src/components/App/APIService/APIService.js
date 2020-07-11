@@ -60,7 +60,7 @@ export default class APIService {
             country: json.data.sys.country
         };
 
-        return JSON.stringify(jsonData);
+        return jsonData;
     }
 
 
@@ -80,16 +80,27 @@ export default class APIService {
         json.forEach(el => {
             const dateWeather = new Date(el.dt * 1000);
             var temp = el.temp.day ? el.temp.day : el.temp;
-        
+
             array.push({
                 currentTemp: Math.floor(temp * 1) / 1,
                 weatherDesc: this.capitalize(el.weather[0].description),
                 weatherIcon: "http://openweathermap.org/img/wn/" + el.weather[0].icon + "@2x.png",
                 dayName: this.weekday[dateWeather.getDay()],
-                hour: this.hourToDisplay(dateWeather),
+                hour: this.hourToDisplay(this.convertUTCDateToLocalDate(dateWeather)),
             })
         });
 
         return array.slice(0, 24);
+    }
+
+    convertUTCDateToLocalDate(date) {
+        var newDate = new Date(date.getTime()+date.getTimezoneOffset()*60*1000);
+
+        var offset = date.getTimezoneOffset() / 60;
+        var hours = date.getHours();
+
+        newDate.setHours(hours - offset);
+
+        return newDate;
     }
 }

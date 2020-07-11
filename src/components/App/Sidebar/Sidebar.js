@@ -32,10 +32,12 @@ export default class Sidebar extends React.Component {
         let todaySummary = this.props.todaySummary;
         let hourlyForecast = this.props.hourlyForecast;
 
+        console.log(todaySummary);
+
         // If not empty today summary
-        if(todaySummary.length > 0) {
-            todaySummary = JSON.parse(todaySummary);
-        }
+            // if(todaySummary.length > 0) {
+            //     todaySummary = JSON.parse(todaySummary);
+            // }
 
         return (
             <div className="component-sidebar">
