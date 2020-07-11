@@ -1,31 +1,30 @@
 import React from 'react';
-import './Forecast.css';
-import Thumbnail from './Thumbnail';
-import { CSSTransitionGroup } from 'react-transition-group';
+import "./TodayForecast.css";
+import SmallThumbnail from "./SmallThumbnail";
 
 import ScrollContainer from 'react-indiana-drag-scroll';
 
-export default class Forecast extends React.Component {
+export default class TodayForecast extends React.Component {
     render() {
 
-        let forecastData = this.props.forecastData;
+        let forecastData = this.props.todayForecast;
         let items = [];
 
         if(forecastData.length) {
-            forecastData = JSON.parse(this.props.forecastData);
+            //console.log(forecastData);
+            //forecastData = JSON.parse(this.props.todayForecast);
             items = forecastData.map((oneDay, i) => (
-                <div className="wrapper-thumbnail mt-2 mb-2 ml-2 mr-2 col-xs-6 col-md-6 col-lg-3 col-xl-2 text-center">
-                    <Thumbnail key={i.toString()} forecastData={oneDay} />
+                <div className="wrapper-thumbnail mt-2 mb-5 ml-2 mr-2 col-xs-12 text-center">
+                    <SmallThumbnail key={i.toString()} todayForecast={oneDay} />
                 </div>
             ));
         }
 
         return(
             <div className="component-forecast">
-                <h1 className="text-center">Forecast</h1>
                 <div className="container">
                     <ScrollContainer className="scroll-container">
-                        <div className="row flex-nowrap">
+                        <div className="row flex-nowrap wrapper-smallthumbnail">
                             {items}
                         </div>
                     </ScrollContainer>

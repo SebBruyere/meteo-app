@@ -47,7 +47,7 @@ export default class APIService {
     sanitizeDataWeather(json) {
         var jsonData = {
             name: json.data.name,
-            currentTemp: json.data.main.temp,
+            currentTemp: Math.floor(json.data.main.temp * 1) / 1,
             weatherDesc: this.capitalize(json.data.weather[0].description),
             weatherIcon: "http://openweathermap.org/img/wn/" + json.data.weather[0].icon + "@2x.png",
             country: json.data.sys.country
@@ -57,14 +57,21 @@ export default class APIService {
     }
 
     sanitizeDataForecast(json) {
-        const week = json.data.list;
-        var weekData = [];
+        const forecast = json.data.list;
+
+        const fullForecastData = {
+            todayForecast: [],
+            remainingForecast: []
+        };
 
         for(var i = 0; i < 8; i++) {
-            weekData.push(this.sanitizeOneDayForecast(week[i]));
+            fullForecastData.todayForecast.push(this.sanitizeOneDayForecast(forecast[i]));
+        }
+        for( i = 8; i < 39; i++) {
+            fullForecastData.remainingForecast.push(this.sanitizeOneDayForecast(forecast[i]));
         }
 
-        return JSON.stringify(weekData);
+        return fullForecastData;
     }
 
     sanitizeOneDayForecast (json) {
@@ -78,15 +85,15 @@ export default class APIService {
             first.getDate() === second.getDate();
 
         if(datesAreOnSameDay(dateWeather, dateNow)) {
-            var dateToDisplay = "Today";
+            var dateToDisplay = "Aujourd'hui";
         } else if(dateTomorrow.getFullYear() == dateWeather.getFullYear() && dateTomorrow.getMonth() == dateWeather.getMonth() && dateTomorrow.getDate() == dateWeather.getDate()) {
-            var dateToDisplay = "Tomorrow";
+            var dateToDisplay = "Demain";
         } else {
             var dateToDisplay = this.weekday[dateWeather.getDay()];
         }
 
         var jsonData = {
-            currentTemp: json.main.temp,
+            currentTemp: Math.floor(json.main.temp * 1) / 1,
             weatherDesc: this.capitalize(json.weather[0].description),
             weatherIcon: "http://openweathermap.org/img/wn/" + json.weather[0].icon + "@2x.png",
             dayToDisplay: dateToDisplay,

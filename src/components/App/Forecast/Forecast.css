@@ -1,7 +1,8 @@
 .component-forecast {
-    padding: 50px 20px;
+    padding: 20px;
     background-color: #5b606b;
     border-radius: 6px;
+    cursor: grab;
 }
 
 .example-enter {
