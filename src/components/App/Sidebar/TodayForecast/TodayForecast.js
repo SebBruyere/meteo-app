@@ -11,8 +11,6 @@ export default class TodayForecast extends React.Component {
         let items = [];
 
         if(forecastData.length) {
-            //console.log(forecastData);
-            //forecastData = JSON.parse(this.props.todayForecast);
             items = forecastData.map((oneDay, i) => (
                 <div className="wrapper-thumbnail mt-2 mb-5 ml-2 mr-2 col-xs-12 text-center">
                     <SmallThumbnail key={i.toString()} todayForecast={oneDay} />
@@ -21,14 +19,12 @@ export default class TodayForecast extends React.Component {
         }
 
         return(
-            <div className="component-forecast">
-                <div className="container">
-                    <ScrollContainer className="scroll-container">
-                        <div className="row flex-nowrap wrapper-smallthumbnail">
-                            {items}
-                        </div>
-                    </ScrollContainer>
-                </div>
+            <div className="container">
+                <ScrollContainer className="scroll-container">
+                    <div className="row flex-nowrap wrapper-smallthumbnail">
+                        {items}
+                    </div>
+                </ScrollContainer>
             </div>
         )
     }

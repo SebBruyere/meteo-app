@@ -13,32 +13,26 @@ function App () {
     const [appState, setAppState] = useState({
         loading: false,
         todaySummary: [],
-        todayForecast: [],
-        remainingForecast: [],
+        hourlyForecast: [],
+        dailyForecast: [],
         city: null,
     });
 
     const fetchApiData = (event) => {
-        const todayWeatherRequest = axios.get(`${service.getApiUrlWeather()}?appid=${service.getApiKey()}&q=${event}&units=metric&lang=fr`);
-        const forecastRequest = axios.get(`${service.getApiUrlForecast()}?appid=${service.getApiKey()}&q=${event}&units=metric&lang=fr`);
-
-        axios.all([todayWeatherRequest, forecastRequest])
-            .then(axios.spread((...responses) => {
-                const todayWeatherRes = responses[0];
-                const forecastRes = responses[1];
-
-                const forecastSanitizing = service.sanitizeDataForecast(forecastRes)
-
+        axios.get(`${service.getApiUrlWeather()}?appid=${service.getApiKey()}&q=${event}&units=metric&lang=fr`)
+            .then(res => {
+                console.log(res);
                 setAppState({
-                    todaySummary: service.sanitizeDataWeather(todayWeatherRes),
-                    todayForecast: JSON.stringify(forecastSanitizing.todayForecast),
-                    remainingForecast: JSON.stringify(forecastSanitizing.remainingForecast)
+                    todaySummary: service.sanitizeDataWeather(res)
                 });
-
-            // use/access the results
-            })).catch(errors => {
-
-        })
+                return axios.get(`${service.getApiUrlOneCall()}?appid=${service.getApiKey()}&lat=${res.data.coord.lat}&lon=${res.data.coord.lon}&exclude=current&units=metric&lang=fr`);
+            }).then(res => {
+                console.log(res);
+                setAppState({
+                    hourlyForecast: service.sanitizeForecast(res.data.hourly),
+                    dailyForecast: service.sanitizeForecast(res.data.daily)
+                });
+            }).catch(error => console.log(error.response));
     }
 
     return (
@@ -48,18 +42,18 @@ function App () {
             <body className="App-body">
                 <div className="container-fluid">
                     <div className="row h-100">
-                        <div className="col-xs-12 col-md-6 col-lg-4 col-xl-3 mt-3 mb-3 text-center">
+                        <div className="col-xs-12 col-md-6 col-lg-4 mt-3 mb-3 text-center">
                             <Sidebar
                                 city={appState.city}
                                 todaySummary={appState.todaySummary ? appState.todaySummary : false}
-                                todayForecast={appState.todayForecast ? appState.todayForecast : false}
+                                hourlyForecast={appState.hourlyForecast ? appState.hourlyForecast : false}
                                 handleEnter={fetchApiData}
                             />
                         </div>
-                        <div className="col-xs-12 col-md-6 col-lg-8 col-xl-9 mt-3 mb-3">
+                        <div className="col-xs-12 col-md-6 col-lg-8 mt-3 mb-3">
                             <Forecast
                                 city={appState.city}
-                                forecastData={appState.remainingForecast ? appState.remainingForecast : false}
+                                forecastData={appState.dailyForecast ? appState.dailyForecast : false}
                             />
                         </div>
                     </div>
