@@ -4,10 +4,10 @@ import React from 'react';
 
         return (
             <div className="mt-5">
-                <h1>{props.todaySummary.name}&nbsp;{props.todaySummary.country ? '(' + props.todaySummary.country  + ')' : ''}</h1>
+                <h3>{props.todaySummary.name}&nbsp;{props.todaySummary.country ? '(' + props.todaySummary.country  + ')' : ''}</h3>
                 <h1>{props.todaySummary.currentTemp ? props.todaySummary.currentTemp + "°" : ""}</h1>
-                <h1>{props.todaySummary.weatherDesc}</h1>
-                <img className="" src={props.todaySummary.weatherIcon ? props.todaySummary.weatherIcon : ""} />
+                <h4>{props.todaySummary.weatherDesc}</h4>
+                <img className="" src={props.todaySummary.weatherIcon ? props.todaySummary.weatherIcon : ""} alt="" />
             </div>
         );
     }

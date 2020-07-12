@@ -1,16 +1,14 @@
 import React from 'react';
 import "./TodayForecast.css";
 import SmallThumbnail from "./SmallThumbnail";
-
 import ScrollContainer from 'react-indiana-drag-scroll';
 
 export default class TodayForecast extends React.Component {
     render() {
-
         let forecastData = this.props.todayForecast;
         let items = [];
 
-        if(forecastData.length) {
+        if (forecastData.length) {
             items = forecastData.map((oneDay, i) => (
                 <div className="wrapper-thumbnail mt-2 mb-5 ml-2 mr-2 col-xs-12 text-center">
                     <SmallThumbnail key={i.toString()} todayForecast={oneDay} />
@@ -18,7 +16,7 @@ export default class TodayForecast extends React.Component {
             ));
         }
 
-        return(
+        return (
             <div className="container">
                 <ScrollContainer className="scroll-container">
                     <div className="row flex-nowrap wrapper-smallthumbnail">

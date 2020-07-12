@@ -1,39 +1,30 @@
+import axios from 'axios';
+
 export default class APIService {
 
     constructor() {
         this.apiKey = "109ff3545de4ef5f87dacbb3775a0e1f";
-        this.apiUrlWeather = "https://api.openweathermap.org/data/2.5/weather";
-        this.apiUrlHourlyForecast = "https://api.openweathermap.org/data/2.5/forecast";
-
-        this.apiUrlOneCall = "https://api.openweathermap.org/data/2.5/onecall";
-
+        this.baseURL = "https://api.openweathermap.org/data/2.5";
+        this.iconBaseURL = "http://openweathermap.org/img/wn/";
         this.defaultCity = "Nice";
-        this.weekday = {
-            0: "Sunday",
-            1: "Monday",
-            2: "Tuesday",
-            3: "Wednesday",
-            4: "Thursday",
-            5: "Friday",
-            6: "Saturday",
-        };
+        this.weekday = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
     }
 
-    getApiKey() {
-        return this.apiKey;
-    }
-
-    getApiUrlWeather() {
-        return this.apiUrlWeather;
-    }
-    getApiUrlHourlyForecast() {
-        return this.apiUrlHourlyForecast;
-    }
-    getApiUrlOneCall() {
-        return this.apiUrlOneCall;
-    }
-    getDefaultCity() {
-        return this.defaultCity;
+    fetchApiData = (cityName, callback) => {
+        var todayWeather;
+        axios.get(`${this.baseURL}/weather?appid=${this.apiKey}&q=${cityName ? cityName : this.defaultCity}&units=metric`)
+            .then(res => {
+                console.log(res);
+                todayWeather = this.sanitizeDataWeather(res);
+                return axios.get(`${this.baseURL}/onecall?appid=${this.apiKey}&lat=${res.data.coord.lat}&lon=${res.data.coord.lon}&exclude=current&units=metric`);
+            }).then(res => {
+                console.log(res);
+                callback({
+                    todaySummary: todayWeather,
+                    hourlyForecast: this.sanitizeForecast(res.data.hourly, true),
+                    dailyForecast: this.sanitizeForecast(res.data.daily, false)
+                });
+            }).catch(error => console.log(error.response));
     }
 
     hourToDisplay(date) {
@@ -49,9 +40,7 @@ export default class APIService {
         return s.charAt(0).toUpperCase() + s.slice(1)
     }
 
-
     sanitizeDataWeather(json) {
-
         var jsonData = {
             name: json.data.name,
             currentTemp: Math.floor(json.data.main.temp * 1) / 1,
@@ -63,19 +52,8 @@ export default class APIService {
         return jsonData;
     }
 
-
-    sanitizeForecast (json) {
-        const dateNow = new Date();
-        var dateTomorrow = new Date(dateNow.getFullYear(), dateNow.getMonth(), dateNow.getDate() + 1);
-
-        // Check if date now and
-        const datesAreOnSameDay = (first, second) =>
-            first.getFullYear() === second.getFullYear() &&
-            first.getMonth() === second.getMonth() &&
-            first.getDate() === second.getDate();
-
+    sanitizeForecast(json, currentDay) {
         var array = [];
-
 
         json.forEach(el => {
             const dateWeather = new Date(el.dt * 1000);
@@ -84,18 +62,22 @@ export default class APIService {
             array.push({
                 currentTemp: Math.floor(temp * 1) / 1,
                 weatherDesc: this.capitalize(el.weather[0].description),
-                weatherIcon: "http://openweathermap.org/img/wn/" + el.weather[0].icon + "@2x.png",
+                weatherIcon: this.iconBaseURL + el.weather[0].icon + "@2x.png",
                 dayName: this.weekday[dateWeather.getDay()],
                 hour: this.hourToDisplay(this.convertUTCDateToLocalDate(dateWeather)),
             })
         });
 
-        return array.slice(0, 24);
+        if (currentDay) {
+            return array.slice(0, 24);
+        } else {
+            return array.slice(1, 7);
+        }
+
     }
 
     convertUTCDateToLocalDate(date) {
-        var newDate = new Date(date.getTime()+date.getTimezoneOffset()*60*1000);
-
+        var newDate = new Date(date.getTime() + date.getTimezoneOffset() * 60 * 1000);
         var offset = date.getTimezoneOffset() / 60;
         var hours = date.getHours();
 

@@ -1,6 +1,10 @@
 .component-sidebar {
-    height: 100%;
-    padding: 50px 20px;
+    height: 30%;
+    padding: 20px;
     background-color: #5b606b80;
     border-radius: 6px;
+}
+
+.component-sidebar.fullheight {
+    height: 100%;
 }
