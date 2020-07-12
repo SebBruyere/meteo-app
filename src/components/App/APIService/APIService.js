@@ -5,6 +5,7 @@ export default class APIService {
     constructor() {
         this.apiKey = "109ff3545de4ef5f87dacbb3775a0e1f";
         this.baseURL = "https://api.openweathermap.org/data/2.5";
+        this.iconBaseURL = "http://openweathermap.org/img/wn/";
         this.defaultCity = "Nice";
         this.weekday = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
     }
@@ -61,7 +62,7 @@ export default class APIService {
             array.push({
                 currentTemp: Math.floor(temp * 1) / 1,
                 weatherDesc: this.capitalize(el.weather[0].description),
-                weatherIcon: "http://openweathermap.org/img/wn/" + el.weather[0].icon + "@2x.png",
+                weatherIcon: this.iconBaseURL + el.weather[0].icon + "@2x.png",
                 dayName: this.weekday[dateWeather.getDay()],
                 hour: this.hourToDisplay(this.convertUTCDateToLocalDate(dateWeather)),
             })
@@ -77,7 +78,6 @@ export default class APIService {
 
     convertUTCDateToLocalDate(date) {
         var newDate = new Date(date.getTime() + date.getTimezoneOffset() * 60 * 1000);
-
         var offset = date.getTimezoneOffset() / 60;
         var hours = date.getHours();
 

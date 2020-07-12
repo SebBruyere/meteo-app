@@ -1,19 +1,35 @@
 .component-search-input {
     display: flex;
 }
+
 .component-search-input input {
     height: 50px;
     border-radius: 25px;
     padding: 10px;
     width: 100%;
     outline: none;
-    font-size: 30px;
+    font-size: 1.3rem;
     font-weight: bold;
     padding: 0 20px;
     color: #5b606b;
+    border: 0;
 }
 
 .component-search-input input:focus {
-  outline-color: transparent;
-  outline-style: none;
+    outline-color: transparent;
+    outline-style: none;
+}
+
+::-webkit-input-placeholder {
+    /* Edge */
+    color: #e8e9ea;
+}
+
+:-ms-input-placeholder {
+    /* Internet Explorer 10-11 */
+    color: #e8e9ea;
+}
+
+::placeholder {
+    color: #e8e9ea;
 }

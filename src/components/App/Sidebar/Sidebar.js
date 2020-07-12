@@ -10,10 +10,7 @@ export default class Sidebar extends React.Component {
     constructor(props) {
         super(props);
 
-        // Bind the this context to the handler function
         this.handleKeyDown = this.handleKeyDown.bind(this);
-
-        // Set some state
         this.state = {
             city: this.props.city,
             weatherInfo: null,
@@ -21,23 +18,15 @@ export default class Sidebar extends React.Component {
         };
     }
 
-    handleKeyDown (e) {
-        if(e.key === "Enter") {
+    handleKeyDown(e) {
+        if (e.key === "Enter") {
             this.props.handleEnter(e.target.value);
         }
     }
 
     render() {
-
         let todaySummary = this.props.todaySummary;
         let hourlyForecast = this.props.hourlyForecast;
-
-        console.log(todaySummary);
-
-        // If not empty today summary
-            // if(todaySummary.length > 0) {
-            //     todaySummary = JSON.parse(todaySummary);
-            // }
 
         return (
             <div className="component-sidebar">

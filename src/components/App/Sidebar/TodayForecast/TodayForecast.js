@@ -1,12 +1,10 @@
 import React from 'react';
 import "./TodayForecast.css";
 import SmallThumbnail from "./SmallThumbnail";
-
 import ScrollContainer from 'react-indiana-drag-scroll';
 
 export default class TodayForecast extends React.Component {
     render() {
-
         let forecastData = this.props.todayForecast;
         let items = [];
 

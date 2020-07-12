@@ -12,8 +12,6 @@ export default class App extends React.Component {
         super();
 
         this.fetchApiData = this.fetchApiData.bind(this);
-
-        // Set some state
         this.state = {
             loading: false,
             todaySummary: [],

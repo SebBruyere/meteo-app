@@ -5,6 +5,7 @@
 
 .thumbnail {
     padding: 10px;
-    background-color: rgba(0,0,0,0.05);
+    background-color: rgba(0, 0, 0, 0.05);
     border-radius: 3px;
+    height: 100%;
 }
