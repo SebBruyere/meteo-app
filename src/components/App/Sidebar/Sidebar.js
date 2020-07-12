@@ -8,7 +8,7 @@ import "./Sidebar.css";
 export default class Sidebar extends React.Component {
 
     constructor(props) {
-        super(props)
+        super(props);
 
         // Bind the this context to the handler function
         this.handleKeyDown = this.handleKeyDown.bind(this);

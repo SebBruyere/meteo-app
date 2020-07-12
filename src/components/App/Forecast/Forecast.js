@@ -11,23 +11,21 @@ export default class Forecast extends React.Component {
         let forecastData = this.props.forecastData;
         let items = [];
 
-        if(forecastData.length) {
+        if (forecastData.length) {
             items = forecastData.map((oneDay, i) => (
-                <div className="wrapper-thumbnail mt-2 mb-2 ml-2 mr-2 col-xs-12 col-md-6 col-lg-3 col-xl-2 text-center">
+                <div className="wrapper-thumbnail mt-2 mb-2 col-xs-12 col-md-6 col-lg-3 col-xl-2 text-center">
                     <Thumbnail key={i.toString()} forecastData={oneDay} />
                 </div>
             ));
         }
 
-        return(
+        return (
             <div className="component-forecast">
                 <h1 className="text-center">Forecast</h1>
                 <div className="container">
-                    <ScrollContainer className="scroll-container">
-                        <div className="row flex-nowrap">
+                        <div className="row">
                             {items}
                         </div>
-                    </ScrollContainer>
                 </div>
             </div>
         )
