@@ -52,7 +52,7 @@ export default class App extends React.Component {
                                     handleEnter={this.fetchApiData}
                                 />
                             </div>
-                            <div className="col-xs-12 col-md-6 col-lg-8 mt-3 mb-3">
+                            <div className="col-xs-12 col-md-6 col-lg-8 mt-3 mb-3 align-self-end">
                                 <Forecast
                                     city={this.state.city}
                                     forecastData={this.state.dailyForecast ? this.state.dailyForecast : false}

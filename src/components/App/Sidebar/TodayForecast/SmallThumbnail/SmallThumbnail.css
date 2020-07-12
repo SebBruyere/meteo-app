@@ -1,3 +1,9 @@
+.smallthumbnail {
+    padding: 10px;
+    background-color: rgba(0,0,0,0.05);
+    border-radius: 3px;
+}
+
 /* width */
 ::-webkit-scrollbar {
   width: 10px;

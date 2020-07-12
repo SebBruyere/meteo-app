@@ -3,12 +3,15 @@
 }
 
 .App-body {
-    background: linear-gradient(270deg, #697d78, #6a6d9b, #4794b7);
-    background-size: 600% 600%;
+    /* background: linear-gradient(270deg, #697d78, #6a6d9b, #4794b7); */
+    /* background-size: 600% 600%; */
 
-    -webkit-animation: AnimationName 30s ease infinite;
+    background: url('../../assets/background.jpg');
+    background-size: cover;
+
+    /* -webkit-animation: AnimationName 30s ease infinite;
     -moz-animation: AnimationName 30s ease infinite;
-    animation: AnimationName 30s ease infinite;
+    animation: AnimationName 30s ease infinite; */
 }
 
 @-webkit-keyframes AnimationName {
