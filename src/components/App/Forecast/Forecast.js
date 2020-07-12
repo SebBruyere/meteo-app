@@ -1,7 +1,7 @@
 import React from 'react';
 import './Forecast.css';
 import Thumbnail from './Thumbnail';
-import { CSSTransitionGroup } from 'react-transition-group';
+//import { CSSTransitionGroup } from 'react-transition-group';
 
 import ScrollContainer from 'react-indiana-drag-scroll';
 

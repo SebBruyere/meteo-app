@@ -31,7 +31,7 @@ function App () {
         <div className="App">
             <header className="App-header">
             </header>
-            <body className="App-body">
+            <div className="App-body">
                 <div className="container-fluid">
                     <div className="row h-100">
                         <div className="col-xs-12 col-md-6 col-lg-4 mt-3 mb-3 text-center">
@@ -50,7 +50,7 @@ function App () {
                         </div>
                     </div>
                 </div>
-            </body>
+            </div>
         </div>
     );
 }

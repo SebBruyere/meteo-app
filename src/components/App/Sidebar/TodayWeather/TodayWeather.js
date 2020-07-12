@@ -7,7 +7,7 @@ import React from 'react';
                 <h1>{props.todaySummary.name}&nbsp;{props.todaySummary.country ? '(' + props.todaySummary.country  + ')' : ''}</h1>
                 <h1>{props.todaySummary.currentTemp ? props.todaySummary.currentTemp + "°" : ""}</h1>
                 <h1>{props.todaySummary.weatherDesc}</h1>
-                <img className="" src={props.todaySummary.weatherIcon ? props.todaySummary.weatherIcon : ""} />
+                <img className="" src={props.todaySummary.weatherIcon ? props.todaySummary.weatherIcon : ""} alt="" />
             </div>
         );
     }

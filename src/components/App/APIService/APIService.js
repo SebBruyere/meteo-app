@@ -20,8 +20,8 @@ export default class APIService {
             console.log(res);
             callback({
                     todaySummary: todayWeather,
-                    hourlyForecast: this.sanitizeForecast(res.data.hourly),
-                    dailyForecast: this.sanitizeForecast(res.data.daily)
+                    hourlyForecast: this.sanitizeForecast(res.data.hourly, true),
+                    dailyForecast: this.sanitizeForecast(res.data.daily, false)
                 });
         }).catch(error => console.log(error.response));
     }
@@ -51,15 +51,15 @@ export default class APIService {
         return jsonData;
     }
 
-    sanitizeForecast (json) {
-        const dateNow = new Date();
-        var dateTomorrow = new Date(dateNow.getFullYear(), dateNow.getMonth(), dateNow.getDate() + 1);
-
-        // Check if date now and
-        const datesAreOnSameDay = (first, second) =>
-            first.getFullYear() === second.getFullYear() &&
-            first.getMonth() === second.getMonth() &&
-            first.getDate() === second.getDate();
+    sanitizeForecast (json, currentDay) {
+        // const dateNow = new Date();
+        // var dateTomorrow = new Date(dateNow.getFullYear(), dateNow.getMonth(), dateNow.getDate() + 1);
+        //
+        // // Check if date now and
+        // const datesAreOnSameDay = (first, second) =>
+        //     first.getFullYear() === second.getFullYear() &&
+        //     first.getMonth() === second.getMonth() &&
+        //     first.getDate() === second.getDate();
 
         var array = [];
 
@@ -76,7 +76,12 @@ export default class APIService {
             })
         });
 
-        return array.slice(0, 24);
+        if (currentDay) {
+            return array.slice(0, 24);
+        } else {
+            return array.slice(1, 7);
+        }
+
     }
 
     convertUTCDateToLocalDate(date) {
