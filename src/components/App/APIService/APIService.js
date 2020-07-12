@@ -19,7 +19,7 @@ export default class APIService {
         } else {
             path = `${this.baseURL}/weather?appid=${this.apiKey}&q=${cityName ? cityName : this.defaultCity}&units=metric`;
         }
-        
+
         axios.get(path)
             .then(res => {
                 console.log(res);
@@ -32,7 +32,11 @@ export default class APIService {
                     hourlyForecast: this.sanitizeForecast(res.data.hourly, true),
                     dailyForecast: this.sanitizeForecast(res.data.daily, false)
                 });
-            }).catch(error => console.log(error.response));
+            }).catch(error => {
+                callback({
+                    error: error.response
+                });
+            });
     }
 
     hourToDisplay(date) {
@@ -53,7 +57,7 @@ export default class APIService {
             name: json.data.name,
             currentTemp: Math.floor(json.data.main.temp * 1) / 1,
             weatherDesc: this.capitalize(json.data.weather[0].description),
-            weatherIcon: this.iconBaseURL + json.data.weather[0].icon + "@2x.png",
+            weatherIcon: this.iconBaseURL + json.data.weather[0].icon + "@4x.png",
             country: json.data.sys.country
         };
 

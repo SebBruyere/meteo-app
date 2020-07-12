@@ -6,15 +6,33 @@
     height: 50px;
     border-radius: 25px;
     padding: 10px;
-    width: 100%;
+    width: 90%;
     outline: none;
     font-size: 1.3rem;
     font-weight: bold;
     padding: 0 20px;
     color: #5b606b;
     border: 0;
+    margin-right: 10px;
 }
 
+.component-search-input button {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    border: 0;
+    transition: color 0.3s ease, background-color 0.3s ease;
+}
+
+.component-search-input button:hover,
+.component-search-input button:focus,
+.component-search-input button:active {
+    color: white;
+    background-color: black;
+}
+
+
+.component-search-input button:focus
 .component-search-input input:focus {
     outline-color: transparent;
     outline-style: none;
@@ -32,4 +50,47 @@
 
 ::placeholder {
     color: #e8e9ea;
+}
+
+.bounce {
+    outline: 0;
+    animation-name: bounce;
+    animation-duration: .5s;
+    animation-delay: 0.25s;
+}
+
+/* This approximates the ease-in-out-bounce animation from easings.net, which would require a plug-in to use*/
+@keyframes bounce {
+  0% {
+    transform: translateX(0px);
+    timing-function: ease-in;
+  }
+  37% {
+    transform: translateX(5px);
+    timing-function: ease-out;
+  }
+  55% {
+    transform: translateX(-5px);
+    timing-function: ease-in;
+  }
+  73% {
+    transform: translateX(4px);
+    timing-function: ease-out;
+  }
+  82% {
+    transform: translateX(-4px);
+    timing-function: ease-in;
+  }
+  91% {
+    transform: translateX(2px);
+    timing-function: ease-out;
+  }
+  96% {
+    transform: translateX(-2px);
+    timing-function: ease-in;
+  }
+  100% {
+    transform: translateX(0px);
+    timing-function: ease-in;
+  }
 }

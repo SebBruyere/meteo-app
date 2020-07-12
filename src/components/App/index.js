@@ -17,29 +17,35 @@ export default class App extends React.Component {
         this.state = {
             todaySummary: null,
             hourlyForecast: null,
-            dailyForecast: null
+            dailyForecast: null,
+            isAPIError: false
         };
     }
 
     fetchApiData(event, coords) {
         service.fetchApiData(event, coords, (weatherData) => {
-            this.isDataLoaded = true;
-            this.setState({
-                todaySummary: weatherData.todaySummary,
-                hourlyForecast: weatherData.hourlyForecast,
-                dailyForecast: weatherData.dailyForecast,
-            });
+            if (!weatherData.error) {
+                this.isDataLoaded = true;
+                this.isAPIError = false;
+                this.setState({
+                    todaySummary: weatherData.todaySummary,
+                    hourlyForecast: weatherData.hourlyForecast,
+                    dailyForecast: weatherData.dailyForecast,
+                });
+            } else {
+                this.setState({
+                    isAPIError: true
+                });
+            }
         });
     }
 
     componentDidMount() {
         if (navigator.geolocation) {
             navigator.geolocation.getCurrentPosition( (position) => {
-                console.log(position);
                 this.fetchApiData(null, position.coords);
             });
         }
-
     }
 
     render() {
@@ -54,8 +60,9 @@ export default class App extends React.Component {
                                 <Sidebar
                                     todaySummary={this.state.todaySummary ? this.state.todaySummary : false}
                                     hourlyForecast={this.state.hourlyForecast ? this.state.hourlyForecast : false}
-                                    handleEnter={this.fetchApiData}
+                                    handleInputVal={this.fetchApiData}
                                     isDataLoaded={this.isDataLoaded}
+                                    isAPIError={this.state.isAPIError}
                                 />
                             </div>
                             { this.isDataLoaded &&
@@ -66,7 +73,6 @@ export default class App extends React.Component {
                                     />
                                 </div>
                             }
-
                         </div>
                     </div>
                 </div>
