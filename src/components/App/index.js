@@ -11,17 +11,19 @@ export default class App extends React.Component {
     constructor() {
         super();
 
+        this.isDataLoaded = false;
+
         this.fetchApiData = this.fetchApiData.bind(this);
         this.state = {
-            loading: false,
-            todaySummary: [],
-            hourlyForecast: [],
-            dailyForecast: []
+            todaySummary: null,
+            hourlyForecast: null,
+            dailyForecast: null
         };
     }
 
     fetchApiData(event) {
         service.fetchApiData(event, (weatherData) => {
+            this.isDataLoaded = true;
             this.setState({
                 todaySummary: weatherData.todaySummary,
                 hourlyForecast: weatherData.hourlyForecast,
@@ -31,7 +33,7 @@ export default class App extends React.Component {
     }
 
     componentDidMount() {
-        this.fetchApiData(null);
+        //this.fetchApiData(null);
     }
 
     render() {
@@ -44,18 +46,21 @@ export default class App extends React.Component {
                         <div className="row h-100">
                             <div className="col-xs-12 col-md-6 col-lg-4 mt-3 mb-3 text-center">
                                 <Sidebar
-                                    city={this.state.city}
                                     todaySummary={this.state.todaySummary ? this.state.todaySummary : false}
                                     hourlyForecast={this.state.hourlyForecast ? this.state.hourlyForecast : false}
                                     handleEnter={this.fetchApiData}
+                                    isDataLoaded={this.isDataLoaded}
                                 />
                             </div>
-                            <div className="col-xs-12 col-md-6 col-lg-8 mt-3 mb-3 align-self-end">
-                                <Forecast
-                                    city={this.state.city}
-                                    forecastData={this.state.dailyForecast ? this.state.dailyForecast : false}
-                                />
-                            </div>
+                            { this.isDataLoaded &&
+                                <div className="col-xs-12 col-md-6 col-lg-8 mt-3 mb-3 align-self-end">
+                                    <Forecast
+                                        city={this.state.city}
+                                        forecastData={this.state.dailyForecast ? this.state.dailyForecast : false}
+                                    />
+                                </div>
+                            }
+
                         </div>
                     </div>
                 </div>

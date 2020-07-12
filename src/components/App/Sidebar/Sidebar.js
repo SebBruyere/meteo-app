@@ -9,13 +9,7 @@ export default class Sidebar extends React.Component {
 
     constructor(props) {
         super(props);
-
         this.handleKeyDown = this.handleKeyDown.bind(this);
-        this.state = {
-            city: this.props.city,
-            weatherInfo: null,
-            error: false,
-        };
     }
 
     handleKeyDown(e) {
@@ -29,11 +23,16 @@ export default class Sidebar extends React.Component {
         let hourlyForecast = this.props.hourlyForecast;
 
         return (
-            <div className="component-sidebar">
+
+            <div className={`component-sidebar ${this.props.isDataLoaded ? "fullheight" : ""}`}>
                 <h1 className="mb-5">Today's weather</h1>
-                <SearchBar city={this.state.city} keydown={this.handleKeyDown} />
-                <TodayWeather todaySummary={todaySummary} />
-                <TodayForecast todayForecast={hourlyForecast} />
+                <SearchBar keydown={this.handleKeyDown} />
+                { this.props.isDataLoaded &&
+                    <div>
+                        <TodayWeather todaySummary={todaySummary} />
+                        <TodayForecast todayForecast={hourlyForecast} />
+                    </div>
+                }
             </div>
         );
     }
