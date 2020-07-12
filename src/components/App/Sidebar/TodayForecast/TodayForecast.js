@@ -10,7 +10,7 @@ export default class TodayForecast extends React.Component {
 
         if (forecastData.length) {
             items = forecastData.map((oneDay, i) => (
-                <div className="wrapper-thumbnail mt-2 mb-5 ml-2 mr-2 col-xs-12 text-center">
+                <div className="wrapper-thumbnail mt-2 mb-2 ml-2 mr-2 col-xs-12 text-center">
                     <SmallThumbnail key={i.toString()} todayForecast={oneDay} />
                 </div>
             ));

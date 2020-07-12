@@ -21,8 +21,8 @@ export default class App extends React.Component {
         };
     }
 
-    fetchApiData(event) {
-        service.fetchApiData(event, (weatherData) => {
+    fetchApiData(event, coords) {
+        service.fetchApiData(event, coords, (weatherData) => {
             this.isDataLoaded = true;
             this.setState({
                 todaySummary: weatherData.todaySummary,
@@ -33,7 +33,13 @@ export default class App extends React.Component {
     }
 
     componentDidMount() {
-        //this.fetchApiData(null);
+        if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition( (position) => {
+                console.log(position);
+                this.fetchApiData(null, position.coords);
+            });
+        }
+
     }
 
     render() {

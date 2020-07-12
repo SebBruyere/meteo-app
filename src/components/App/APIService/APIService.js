@@ -10,9 +10,17 @@ export default class APIService {
         this.weekday = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
     }
 
-    fetchApiData = (cityName, callback) => {
+    fetchApiData = (cityName, coords, callback) => {
         var todayWeather;
-        axios.get(`${this.baseURL}/weather?appid=${this.apiKey}&q=${cityName ? cityName : this.defaultCity}&units=metric`)
+        var path;
+
+        if (coords) {
+            path = `${this.baseURL}/weather?appid=${this.apiKey}&lat=${coords.latitude}&lon=${coords.longitude}&units=metric`;
+        } else {
+            path = `${this.baseURL}/weather?appid=${this.apiKey}&q=${cityName ? cityName : this.defaultCity}&units=metric`;
+        }
+        
+        axios.get(path)
             .then(res => {
                 console.log(res);
                 todayWeather = this.sanitizeDataWeather(res);
