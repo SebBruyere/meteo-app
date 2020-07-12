@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './App.css';
 import Sidebar from './Sidebar';
 import Forecast from './Forecast';
@@ -7,19 +7,24 @@ import 'bootstrap/dist/css/bootstrap.css';
 
 const service = new APIService();
 
-function App () {
+export default class App extends React.Component {
+    constructor() {
+        super();
 
-    const [appState, setAppState] = useState({
-        loading: false,
-        todaySummary: [],
-        hourlyForecast: [],
-        dailyForecast: [],
-        city: null,
-    });
+        this.fetchApiData = this.fetchApiData.bind(this);
 
-    const fetchApiData = (event) => {
+        // Set some state
+        this.state = {
+            loading: false,
+            todaySummary: [],
+            hourlyForecast: [],
+            dailyForecast: []
+        };
+    }
+
+    fetchApiData(event) {
         service.fetchApiData(event, (weatherData) => {
-            setAppState({
+            this.setState({
                 todaySummary: weatherData.todaySummary,
                 hourlyForecast: weatherData.hourlyForecast,
                 dailyForecast: weatherData.dailyForecast,
@@ -27,32 +32,36 @@ function App () {
         });
     }
 
-    return (
-        <div className="App">
-            <header className="App-header">
-            </header>
-            <div className="App-body">
-                <div className="container-fluid">
-                    <div className="row h-100">
-                        <div className="col-xs-12 col-md-6 col-lg-4 mt-3 mb-3 text-center">
-                            <Sidebar
-                                city={appState.city}
-                                todaySummary={appState.todaySummary ? appState.todaySummary : false}
-                                hourlyForecast={appState.hourlyForecast ? appState.hourlyForecast : false}
-                                handleEnter={fetchApiData}
-                            />
-                        </div>
-                        <div className="col-xs-12 col-md-6 col-lg-8 mt-3 mb-3">
-                            <Forecast
-                                city={appState.city}
-                                forecastData={appState.dailyForecast ? appState.dailyForecast : false}
-                            />
+    componentDidMount() {
+        this.fetchApiData(null);
+    }
+
+    render() {
+        return (
+            <div className="App">
+                <header className="App-header">
+                </header>
+                <div className="App-body">
+                    <div className="container-fluid">
+                        <div className="row h-100">
+                            <div className="col-xs-12 col-md-6 col-lg-4 mt-3 mb-3 text-center">
+                                <Sidebar
+                                    city={this.state.city}
+                                    todaySummary={this.state.todaySummary ? this.state.todaySummary : false}
+                                    hourlyForecast={this.state.hourlyForecast ? this.state.hourlyForecast : false}
+                                    handleEnter={this.fetchApiData}
+                                />
+                            </div>
+                            <div className="col-xs-12 col-md-6 col-lg-8 mt-3 mb-3">
+                                <Forecast
+                                    city={this.state.city}
+                                    forecastData={this.state.dailyForecast ? this.state.dailyForecast : false}
+                                />
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
-    );
+        );
+    }
 }
-
-export default App;

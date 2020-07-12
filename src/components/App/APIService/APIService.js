@@ -11,19 +11,19 @@ export default class APIService {
 
     fetchApiData = (cityName, callback) => {
         var todayWeather;
-        axios.get(`${this.baseURL}/weather?appid=${this.apiKey}&q=${cityName}&units=metric&lang=fr`)
-        .then(res => {
-            console.log(res);
-            todayWeather = this.sanitizeDataWeather(res);
-            return axios.get(`${this.baseURL}/onecall?appid=${this.apiKey}&lat=${res.data.coord.lat}&lon=${res.data.coord.lon}&exclude=current&units=metric&lang=fr`);
-        }).then(res => {
-            console.log(res);
-            callback({
+        axios.get(`${this.baseURL}/weather?appid=${this.apiKey}&q=${cityName ? cityName : this.defaultCity}&units=metric`)
+            .then(res => {
+                console.log(res);
+                todayWeather = this.sanitizeDataWeather(res);
+                return axios.get(`${this.baseURL}/onecall?appid=${this.apiKey}&lat=${res.data.coord.lat}&lon=${res.data.coord.lon}&exclude=current&units=metric`);
+            }).then(res => {
+                console.log(res);
+                callback({
                     todaySummary: todayWeather,
                     hourlyForecast: this.sanitizeForecast(res.data.hourly, true),
                     dailyForecast: this.sanitizeForecast(res.data.daily, false)
                 });
-        }).catch(error => console.log(error.response));
+            }).catch(error => console.log(error.response));
     }
 
     hourToDisplay(date) {
@@ -51,16 +51,7 @@ export default class APIService {
         return jsonData;
     }
 
-    sanitizeForecast (json, currentDay) {
-        // const dateNow = new Date();
-        // var dateTomorrow = new Date(dateNow.getFullYear(), dateNow.getMonth(), dateNow.getDate() + 1);
-        //
-        // // Check if date now and
-        // const datesAreOnSameDay = (first, second) =>
-        //     first.getFullYear() === second.getFullYear() &&
-        //     first.getMonth() === second.getMonth() &&
-        //     first.getDate() === second.getDate();
-
+    sanitizeForecast(json, currentDay) {
         var array = [];
 
         json.forEach(el => {
@@ -85,7 +76,7 @@ export default class APIService {
     }
 
     convertUTCDateToLocalDate(date) {
-        var newDate = new Date(date.getTime()+date.getTimezoneOffset()*60*1000);
+        var newDate = new Date(date.getTime() + date.getTimezoneOffset() * 60 * 1000);
 
         var offset = date.getTimezoneOffset() / 60;
         var hours = date.getHours();
