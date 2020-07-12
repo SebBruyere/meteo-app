@@ -5,7 +5,7 @@ export default class APIService {
     constructor() {
         this.apiKey = "109ff3545de4ef5f87dacbb3775a0e1f";
         this.baseURL = "https://api.openweathermap.org/data/2.5";
-        this.iconBaseURL = "http://openweathermap.org/img/wn/";
+        this.iconBaseURL = "https://openweathermap.org/img/wn/";
         this.defaultCity = "Nice";
         this.weekday = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
     }
@@ -53,7 +53,7 @@ export default class APIService {
             name: json.data.name,
             currentTemp: Math.floor(json.data.main.temp * 1) / 1,
             weatherDesc: this.capitalize(json.data.weather[0].description),
-            weatherIcon: "http://openweathermap.org/img/wn/" + json.data.weather[0].icon + "@2x.png",
+            weatherIcon: this.iconBaseURL + json.data.weather[0].icon + "@2x.png",
             country: json.data.sys.country
         };
 

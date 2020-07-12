@@ -24,7 +24,7 @@ export default class Sidebar extends React.Component {
 
         return (
 
-            <div className={`component-sidebar ${this.props.isDataLoaded ? "fullheight" : ""}`}>
+            <div className={`component-sidebar d-flex flex-column justify-content-center ${this.props.isDataLoaded ? "fullheight" : ""}`} >
                 <h1 className="mb-5">Today's weather</h1>
                 <SearchBar keydown={this.handleKeyDown} />
                 { this.props.isDataLoaded &&

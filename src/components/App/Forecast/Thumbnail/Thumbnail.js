@@ -9,7 +9,7 @@ function Thumbnail(props) {
                 <p>{props.forecastData.weatherDesc}</p>
             </div>
             <div>
-                <img className="" src={props.forecastData.weatherIcon ? props.forecastData.weatherIcon : ""} alt="Weather Icon"/>
+                <img src={props.forecastData.weatherIcon ? props.forecastData.weatherIcon : ""} alt="Weather Icon" />
                 <h4>{props.forecastData.dayName}</h4>
             </div>
         </div>
