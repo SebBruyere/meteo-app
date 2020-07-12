@@ -3,7 +3,6 @@ import './App.css';
 import Sidebar from './Sidebar';
 import Forecast from './Forecast';
 import APIService from './APIService';
-import axios from 'axios';
 import 'bootstrap/dist/css/bootstrap.css';
 
 const service = new APIService();
@@ -18,22 +17,14 @@ function App () {
         city: null,
     });
 
-    var todayWeather;
-
     const fetchApiData = (event) => {
-        axios.get(`${service.getApiUrlWeather()}?appid=${service.getApiKey()}&q=${event}&units=metric&lang=fr`)
-            .then(res => {
-                console.log(res);
-                todayWeather = service.sanitizeDataWeather(res);
-                return axios.get(`${service.getApiUrlOneCall()}?appid=${service.getApiKey()}&lat=${res.data.coord.lat}&lon=${res.data.coord.lon}&exclude=current&units=metric&lang=fr`);
-            }).then(res => {
-                console.log(res);
-                setAppState({
-                    todaySummary: todayWeather,
-                    hourlyForecast: service.sanitizeForecast(res.data.hourly),
-                    dailyForecast: service.sanitizeForecast(res.data.daily)
-                });
-            }).catch(error => console.log(error.response));
+        service.fetchApiData(event, (weatherData) => {
+            setAppState({
+                todaySummary: weatherData.todaySummary,
+                hourlyForecast: weatherData.hourlyForecast,
+                dailyForecast: weatherData.dailyForecast,
+            });
+        });
     }
 
     return (

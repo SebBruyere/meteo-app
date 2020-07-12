@@ -1,39 +1,29 @@
+import axios from 'axios';
+
 export default class APIService {
 
     constructor() {
         this.apiKey = "109ff3545de4ef5f87dacbb3775a0e1f";
-        this.apiUrlWeather = "https://api.openweathermap.org/data/2.5/weather";
-        this.apiUrlHourlyForecast = "https://api.openweathermap.org/data/2.5/forecast";
-
-        this.apiUrlOneCall = "https://api.openweathermap.org/data/2.5/onecall";
-
+        this.baseURL = "https://api.openweathermap.org/data/2.5";
         this.defaultCity = "Nice";
-        this.weekday = {
-            0: "Sunday",
-            1: "Monday",
-            2: "Tuesday",
-            3: "Wednesday",
-            4: "Thursday",
-            5: "Friday",
-            6: "Saturday",
-        };
+        this.weekday = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
     }
 
-    getApiKey() {
-        return this.apiKey;
-    }
-
-    getApiUrlWeather() {
-        return this.apiUrlWeather;
-    }
-    getApiUrlHourlyForecast() {
-        return this.apiUrlHourlyForecast;
-    }
-    getApiUrlOneCall() {
-        return this.apiUrlOneCall;
-    }
-    getDefaultCity() {
-        return this.defaultCity;
+    fetchApiData = (cityName, callback) => {
+        var todayWeather;
+        axios.get(`${this.baseURL}/weather?appid=${this.apiKey}&q=${cityName}&units=metric&lang=fr`)
+        .then(res => {
+            console.log(res);
+            todayWeather = this.sanitizeDataWeather(res);
+            return axios.get(`${this.baseURL}/onecall?appid=${this.apiKey}&lat=${res.data.coord.lat}&lon=${res.data.coord.lon}&exclude=current&units=metric&lang=fr`);
+        }).then(res => {
+            console.log(res);
+            callback({
+                    todaySummary: todayWeather,
+                    hourlyForecast: this.sanitizeForecast(res.data.hourly),
+                    dailyForecast: this.sanitizeForecast(res.data.daily)
+                });
+        }).catch(error => console.log(error.response));
     }
 
     hourToDisplay(date) {
@@ -49,9 +39,7 @@ export default class APIService {
         return s.charAt(0).toUpperCase() + s.slice(1)
     }
 
-
     sanitizeDataWeather(json) {
-
         var jsonData = {
             name: json.data.name,
             currentTemp: Math.floor(json.data.main.temp * 1) / 1,
@@ -62,7 +50,6 @@ export default class APIService {
 
         return jsonData;
     }
-
 
     sanitizeForecast (json) {
         const dateNow = new Date();
@@ -75,7 +62,6 @@ export default class APIService {
             first.getDate() === second.getDate();
 
         var array = [];
-
 
         json.forEach(el => {
             const dateWeather = new Date(el.dt * 1000);
